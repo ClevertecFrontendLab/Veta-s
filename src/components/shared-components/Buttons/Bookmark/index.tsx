@@ -1,6 +1,6 @@
 import { Button, Image, ResponsiveValue, Text } from '@chakra-ui/react';
 
-import { BORDERS } from '~/style/styles';
+import { BORDERS } from '~/constants/styles';
 
 export interface ButtonBookBtnProps {
     bookBtnText?: string;
@@ -12,11 +12,14 @@ export interface ButtonBookBtnProps {
     bookBtnVariant?: string;
     bookBtnIconUrl?: string;
     bookBtnIconAltText?: string;
-    bookBtnIconsize?: ResponsiveValue<string | number>;
+    bookBtnIconsize?: string;
     bookBtnSize?: ResponsiveValue<string | number>;
+    bookBtnTextDisplay?: ResponsiveValue<string>;
+    bookBtnIconMarginInlineEnd?: ResponsiveValue<number>;
+    recieptButtonsSize?: ResponsiveValue<string>;
 }
 
-export const ButtonbookBtn = ({
+export const ButtonbookBtn: React.FC<ButtonBookBtnProps> = ({
     bookBtnText = 'Сохранить',
     bookBtnTextcolor = 'blackAlpha.800',
     bookBtnBorderColor,
@@ -26,15 +29,18 @@ export const ButtonbookBtn = ({
     bookBtnVariant = 'outline',
     bookBtnIconUrl = '/icons/bookmarks/heart.svg',
     bookBtnIconAltText = 'Сохранить',
+    bookBtnIconMarginInlineEnd = { base: 0, xl: 2.4375 },
     bookBtnIconsize = { base: 3, xl: 3.5 },
     bookBtnSize = { base: 6, xl: 'initial' },
-}: ButtonBookBtnProps) => (
+    bookBtnTextDisplay = { base: 'none', xl: 'initial' },
+    recieptButtonsSize = { base: 'xs', xl: 'sm' },
+}) => (
     <Button
-        size={{ base: 'xs', xl: 'sm' }}
+        size={recieptButtonsSize}
         maxWidth={bookBtnSize}
         sx={{
             '& .chakra-button__icon': {
-                marginInlineEnd: { base: 0, xl: 2.4375 },
+                marginInlineEnd: bookBtnIconMarginInlineEnd,
             },
         }}
         bg={bookBtnBg}
@@ -45,6 +51,6 @@ export const ButtonbookBtn = ({
         leftIcon={<Image src={bookBtnIconUrl} alt={bookBtnIconAltText} boxSize={bookBtnIconsize} />}
         variant={bookBtnVariant}
     >
-        <Text display={{ base: 'none', xl: 'initial' }}>{bookBtnText}</Text>
+        <Text display={bookBtnTextDisplay}>{bookBtnText}</Text>
     </Button>
 );

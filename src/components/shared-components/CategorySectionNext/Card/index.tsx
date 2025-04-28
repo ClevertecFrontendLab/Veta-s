@@ -2,13 +2,13 @@ import { CategoryCardProps } from '~/components/shared-components/CategorySectio
 
 import { RecieptCard } from '../..';
 
-export const CategorySectionNextCard = ({
+const CategorySectionNextCard: React.FC<CategoryCardProps> = ({
     title,
     description,
-    subcategory,
+    categories,
     icon,
     ...props
-}: CategoryCardProps) => (
+}) => (
     <RecieptCard
         {...props}
         minWidth='initial'
@@ -28,7 +28,7 @@ export const CategorySectionNextCard = ({
         stateIconSize={3}
         stateTextFontSize='14px'
         statTextFontWeight={600}
-        categoryText={subcategory}
+        categories={categories}
         categoryTextFz={14}
         categoryIconUrl={icon}
         bookmarkJustify='space-between'
@@ -44,3 +44,5 @@ export const CategorySectionNextCard = ({
         cardHeaderNoOfLines={1}
     />
 );
+
+export default CategorySectionNextCard;

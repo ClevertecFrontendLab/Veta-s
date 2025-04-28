@@ -17,7 +17,7 @@ export type ButtonOutlinedProps = {
     outlBtnTextPadding?: ResponsiveValue<number | string>;
 };
 
-export const ButtonOutlined = ({
+export const ButtonOutlined: React.FC<ButtonOutlinedProps> = ({
     outlBtnText,
     outlBtnColor = 'lime.600',
     outlBtnBorderColor = 'green.500',
@@ -32,7 +32,7 @@ export const ButtonOutlined = ({
     minWidth,
     outlBtnTextFontSize,
     outlBtnTextPadding,
-}: ButtonOutlinedProps) => (
+}) => (
     <Button
         minWidth={minWidth}
         p={outlBtnTextPadding}

@@ -1,7 +1,8 @@
 import { Flex } from '@chakra-ui/react';
+import React from 'react';
 
 import { ButtonRounded } from '~/components/shared-components';
-import { PADDINGS } from '~/style/styles';
+import { PADDINGS } from '~/constants/styles';
 
 const bottomMenuProps = [
     {
@@ -30,7 +31,7 @@ const bottomMenuProps = [
     },
 ];
 
-export const BottomNavMenu = () => (
+export const BottomNavMenu: React.FC = () => (
     <Flex
         data-test-id='footer'
         position='fixed'
@@ -48,7 +49,7 @@ export const BottomNavMenu = () => (
                 text={button.name}
                 iconUrl={button.iconUrl}
                 isActive={button.isActive}
-                minWidth={90}
+                minWidth='84px'
                 textColor='blackAlpha.700'
             />
         ))}

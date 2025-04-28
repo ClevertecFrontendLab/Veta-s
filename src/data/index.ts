@@ -302,4 +302,8 @@ export const sliderData: CategorySectionDataProps[] = [
     },
 ];
 
-export const allergens = ['Цитрусовые', 'Орехи', 'Молочные продукты', 'Глютен', 'Пыльца'];
+export const allergensIngredients = [
+    'Корень мандрагоры',
+    'Рог единорога',
+    'Секретный ингридиент из слёрма и еще чего',
+];

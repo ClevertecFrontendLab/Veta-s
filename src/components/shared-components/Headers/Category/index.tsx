@@ -1,4 +1,5 @@
 import { Flex, FlexProps, ResponsiveValue } from '@chakra-ui/react';
+import React from 'react';
 
 import { SubtitleText, TitleTextProps } from '../..';
 
@@ -9,7 +10,13 @@ interface CategoryHeaderProps extends TitleTextProps {
     alignItems?: FlexProps['alignItems'];
 }
 
-export const CategoryHeader = ({ title, mb, flex, alignItems, ...props }: CategoryHeaderProps) => (
+export const CategoryHeader: React.FC<CategoryHeaderProps> = ({
+    title,
+    mb,
+    flex,
+    alignItems,
+    ...props
+}) => (
     <Flex justifyContent='start' mb={mb} flex={flex} alignItems={alignItems}>
         <SubtitleText
             titleTextFz={{ base: '2xl', xl: '4xl', '2xl': '5xl' }}

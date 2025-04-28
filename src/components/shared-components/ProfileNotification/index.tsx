@@ -1,8 +1,9 @@
 import { Flex, ResponsiveValue, Stack } from '@chakra-ui/react';
+import React from 'react';
 
 import { StatItem, StatItemProps } from '../';
 
-interface Props extends StatItemProps {
+interface ProfileNotificationProps extends StatItemProps {
     bookmarksValue?: number;
     peopleValue?: number;
     likesValue?: number;
@@ -20,7 +21,7 @@ interface Props extends StatItemProps {
     gap?: string | number;
 }
 
-export const ProfileStats = ({
+export const ProfileNotification: React.FC<ProfileNotificationProps> = ({
     bookmarksValue = 185,
     peopleValue = 589,
     likesValue = 587,
@@ -35,7 +36,7 @@ export const ProfileStats = ({
     stackDirection = 'row',
     gap,
     ...props
-}: Props) => (
+}) => (
     <Flex
         justifyContent={justifyContent}
         flexDirection={flexDirection}
