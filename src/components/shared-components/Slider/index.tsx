@@ -47,6 +47,7 @@ export const Slider: React.FC<SliderProps> = ({ slides = [], activeSearch }) => 
                     spaceBetween: 24,
                 },
             }}
+            style={{ overflow: 'visible' }}
         >
             {slides.map((slide, index) => {
                 const { title, description, image, category, subcategory, id } = slide;
