@@ -3,9 +3,10 @@ import { Navigate, Route, Routes } from 'react-router';
 
 import { navTree } from '~/configs/navigationConfig';
 
-export const AppViews = () => (
+const AppViews: React.FC = () => (
     <Suspense fallback={<div>Загрузка...</div>}>
         <Routes>
+            <Route path=':category/:subcategory/:id' Component={lazy(() => import('./reciept'))} />
             {navTree.map((navItem) => {
                 const MainComponent =
                     navItem.route === '/'
@@ -25,7 +26,10 @@ export const AppViews = () => (
                     </React.Fragment>
                 );
             })}
+
             <Route path='*' element={<Navigate to='/' replace />} />
         </Routes>
     </Suspense>
 );
+
+export default AppViews;

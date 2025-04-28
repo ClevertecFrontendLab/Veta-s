@@ -8,32 +8,27 @@ import {
     Image,
     Text,
 } from '@chakra-ui/react';
-import { Navigate } from 'react-router'; // убрать после первого спринта
+import React from 'react';
 import { Link, useLocation } from 'react-router';
 
 import { navTreeProps } from '~/configs/navigationConfig';
 
-export const SideNavMenuItem = ({
+const SideNavMenuItem: React.FC<navTreeProps> = ({
     title,
     icon = '',
-    route,
     submenu = [],
+    redirect,
+    route,
     navKey,
-}: navTreeProps) => {
+}) => {
     const { pathname } = useLocation();
-
-    // временная заглушка
-    if (pathname === '/vegan-cuisine') {
-        return <Navigate to='/vegan-cuisine/second-courses' />;
-    }
 
     return (
         <AccordionItem border={0}>
             {({ isExpanded }) => (
                 <>
-                    <Link to={route}>
+                    <Link data-test-id={navKey} to={redirect || route}>
                         <AccordionButton
-                            data-test-id={navKey}
                             bg={isExpanded ? 'lime.100' : 'white'}
                             px={2}
                             height={12}
@@ -56,7 +51,11 @@ export const SideNavMenuItem = ({
                     </Link>
                     <AccordionPanel textAlign='left' pb={4}>
                         {submenu.map((category, index) => (
-                            <Link to={category.route} key={index}>
+                            <Link
+                                to={category.route}
+                                key={index}
+                                data-test-id={`${category.navKey}${pathname === category.route ? '-active' : ''}`}
+                            >
                                 <Text
                                     py={2}
                                     ml={5}
@@ -88,3 +87,5 @@ export const SideNavMenuItem = ({
         </AccordionItem>
     );
 };
+
+export default SideNavMenuItem;

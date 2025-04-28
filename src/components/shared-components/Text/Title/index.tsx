@@ -1,6 +1,8 @@
 import { Heading, ResponsiveValue } from '@chakra-ui/react';
 import React from 'react';
 
+import { getHighlightedText } from '~/utils';
+
 export type TitleTextProps = {
     titleText?: string;
     titleTextFz?: ResponsiveValue<string>;
@@ -12,12 +14,13 @@ export type TitleTextProps = {
     titleTextAlign?: ResponsiveValue<'left' | 'center' | 'right' | 'justify'>;
     titleHeading?: React.ElementType;
     titleTextNoOfLines?: ResponsiveValue<number> | number;
+    titleTextHighlight?: string | null;
 };
 
-export const TitleText = ({
+export const TitleText: React.FC<TitleTextProps> = ({
     titleText = '',
     titleTextFz = '48px',
-    titleTextFw = 700,
+    titleTextFw = '700',
     titleTextFf = 'Inter',
     titleTextFs = 'normal',
     titleTextLh = '48px',
@@ -25,7 +28,8 @@ export const TitleText = ({
     titleTextAlign = 'center',
     titleHeading = 'h1',
     titleTextNoOfLines = 3,
-}: TitleTextProps) => (
+    titleTextHighlight,
+}) => (
     <Heading
         as={titleHeading}
         fontSize={titleTextFz}
@@ -37,6 +41,8 @@ export const TitleText = ({
         textAlign={titleTextAlign}
         noOfLines={titleTextNoOfLines}
     >
-        {titleText}
+        {!titleTextHighlight
+            ? titleText
+            : getHighlightedText(titleText, titleTextHighlight, '#2DB100')}
     </Heading>
 );

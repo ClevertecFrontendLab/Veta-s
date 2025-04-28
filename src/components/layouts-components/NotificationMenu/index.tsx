@@ -1,9 +1,10 @@
 import { Box, Flex } from '@chakra-ui/react';
+import React from 'react';
 
-import { ButtonRounded, ProfileStats } from '~/components/shared-components';
-import { PADDINGS, WIDTHS } from '~/style/styles';
+import { ButtonRounded, ProfileNotification } from '~/components/shared-components';
+import { PADDINGS, WIDTHS } from '~/constants/styles';
 
-export const BookmarkSideMenu = () => (
+export const BookmarkSideMenu: React.FC = () => (
     <Flex
         display={{ base: 'none', xl: 'flex' }}
         flexDirection='column'
@@ -19,7 +20,7 @@ export const BookmarkSideMenu = () => (
         bg='white'
         pt={PADDINGS.topMenu}
     >
-        <ProfileStats
+        <ProfileNotification
             height={200}
             flexDirection='column'
             stateIconSize={4}

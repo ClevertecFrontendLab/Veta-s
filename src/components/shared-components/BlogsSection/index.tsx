@@ -1,12 +1,13 @@
 import { Box, Flex } from '@chakra-ui/react';
+import React from 'react';
 
-import { BlogCard } from '~/components/shared-components/BlogsSection/Card';
 import { blogsData } from '~/data';
 
 import { ButtonViewMore } from '../';
 import { TitleText } from '../Text';
+import BlogCard from './Card';
 
-export const BlogsSection = () => (
+export const BlogsSection: React.FC = () => (
     <Flex
         bg='lime.300'
         wrap='wrap'
