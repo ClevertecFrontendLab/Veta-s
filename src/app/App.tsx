@@ -2,7 +2,7 @@ import './App.css';
 
 import { BrowserRouter } from 'react-router';
 
-import AppLayout from '~/layouts/app-layout';
+import AppLayout from '~/layouts/AppLayout';
 
 function App() {
     return (
