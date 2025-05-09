@@ -14,6 +14,7 @@ export const SubtitleText = ({
     titleText,
     titleTextFw = 500,
     titleHeading = 'h2',
+    titleTextAlign = 'left',
     ...props
 }: SubtitleText) => (
     <TitleText
@@ -21,6 +22,6 @@ export const SubtitleText = ({
         titleText={titleText}
         titleTextFw={titleTextFw}
         titleHeading={titleHeading}
-        titleTextAlign='left'
+        titleTextAlign={titleTextAlign}
     />
 );

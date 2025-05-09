@@ -14,12 +14,12 @@ import { useCategoryRecieptsQuery, useRecipeByCategoryQuery } from '../create-ap
 
 type AllCategoriesResponse = {
     category: string;
-    description?: string;
     icon: string;
-    subCategories?: SubCategory[];
     title: string;
     _id: string;
     rootCategoryId?: string;
+    description?: string;
+    subCategories?: SubCategory[];
 }[];
 type RecipesResponse = {
     data: RecipeProps[];
@@ -128,7 +128,6 @@ export function transformRecieptsResponse(response: RecipesResponse | RecipeProp
     }
 
     if ('data' in response && Array.isArray(response.data)) {
-        // RecipesResponse`
         const updatedData = response.data.flat().map((e) => ({
             // тесты (?)
             ...e,
@@ -156,19 +155,14 @@ export function transformRecieptResponse(response: RecipeProps) {
     return { ...response, image: BASE_ICON_URL + response.image, steps: updatedSteps };
 }
 
-type useRequestsProps = {
+type RequestsProps = {
     randomCategory?: RandomCategoryStateProps;
     isJuiciest?: boolean;
     apiQureryId?: string;
     page?: number;
 };
 
-export const useRequests = ({
-    randomCategory,
-    apiQureryId,
-    isJuiciest,
-    page,
-}: useRequestsProps) => {
+export const useRequests = ({ randomCategory, apiQureryId, isJuiciest, page }: RequestsProps) => {
     const { filters } = useFilters();
 
     const {

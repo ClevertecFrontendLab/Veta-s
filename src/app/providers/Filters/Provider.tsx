@@ -4,13 +4,13 @@ import { Filters, FiltersContextProps } from 'src/shared/types';
 
 import { FiltersContext } from './Context';
 
-type DrawerFiltersProviderProps = {
+type Props = {
     children: ReactNode;
     filters: Filters;
     setFilters: Dispatch<SetStateAction<Filters>>;
 };
 
-export const FiltersProvider = ({ children, filters, setFilters }: DrawerFiltersProviderProps) => {
+export const FiltersProvider = ({ children, filters, setFilters }: Props) => {
     const { isOpen, onOpen, onClose } = useDisclosure();
 
     const value: FiltersContextProps = {

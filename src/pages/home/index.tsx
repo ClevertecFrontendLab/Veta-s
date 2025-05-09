@@ -83,21 +83,19 @@ const HomePage = ({ navigationConfig }: Props) => {
                 setJuciestRecipes(populatedData);
             }
 
-            if (randomCategory) {
-                if (randomCategoryRecipes?.length) {
-                    const {
-                        randomCategory: { categoryRu, categoryDescription },
-                    } = randomCategory;
+            if (randomCategory && randomCategoryRecipes?.length) {
+                const {
+                    randomCategory: { categoryRu, categoryDescription },
+                } = randomCategory;
 
-                    const populatedData = randomCategoryRecipes.map((e) =>
-                        populateRecipeCategory(e, subCategoriesByIds),
-                    );
+                const populatedData = randomCategoryRecipes.map((e) =>
+                    populateRecipeCategory(e, subCategoriesByIds),
+                );
 
-                    setRandomCategoryData({
-                        category: { title: categoryRu, description: categoryDescription },
-                        recipes: populatedData,
-                    });
-                }
+                setRandomCategoryData({
+                    category: { title: categoryRu, description: categoryDescription },
+                    recipes: populatedData,
+                });
             }
 
             if (latestData?.length || juciestData?.length) {

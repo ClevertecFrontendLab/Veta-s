@@ -151,6 +151,7 @@ export const RecipeCard = ({
         >
             <Flex mb={titleMargin} order={subtitleOrder} h={cardHeaderHeight}>
                 <SubtitleText
+                    {...rest}
                     titleText={title}
                     titleTextNoOfLines={cardHeaderNoOfLines}
                     titleTextFz={titleTextFz}

@@ -11,7 +11,7 @@ type Props = {
 };
 
 const AppViews = ({ navigationConfig }: Props) => (
-    <Suspense fallback={<div>Загрузка...</div>}>
+    <Suspense>
         <Routes>
             <Route
                 path=':category/:subcategory/:id'

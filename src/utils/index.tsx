@@ -82,3 +82,80 @@ export const getRandomCategory = (categories: CategoriesByIds, exceptId: string 
     const randomCategoryId = ids[Math.floor(Math.random() * ids.length)];
     return categories[randomCategoryId];
 };
+//
+// export function populateAndSetRecipes(
+//     categoryData: Recipe[],
+//     page: number,
+//     subCategoriesByIds: SubCategoriesByIds,
+//     setCategoryRecipes: React.Dispatch<React.SetStateAction<Recipe[]>>
+// ) {
+//     if (!categoryData?.length) return;
+//
+//     const populated = categoryData.map((e) =>
+//         populateRecipeCategory(e, subCategoriesByIds),
+//     );
+//     setCategoryRecipes((prev) => (page === 1 ? populated : [...prev, ...populated]));
+// }
+//
+// export function updateLocation(
+//     isJuiciest: boolean,
+//     currentCategory: AllCategories | null,
+//     subcategory: string | undefined,
+//     dispatch: AppDispatch
+// ) {
+//     if (isJuiciest) {
+//         dispatch(setCurrentLocation({ category: { label: PAGE_TITLES.juiciest } }));
+//         return;
+//     }
+//
+//     if (currentCategory) {
+//         const currentSub = currentCategory.subCategories?.find(
+//             (e) => e.subcategoryEn === subcategory,
+//         );
+//         if (currentSub) {
+//             dispatch(
+//                 setCurrentLocation({
+//                     category: { label: currentCategory.categoryRu, route: currentCategory.route },
+//                     subcategory: { label: currentSub.subcategoryRu, route: currentSub.route },
+//                 }),
+//             );
+//         }
+//     }
+// }
+//
+// export function syncSearchState(
+//     filters: Filters,
+//     searchResultState: SEARCH_STATE | undefined,
+//     setSearchResultState: React.Dispatch<React.SetStateAction<SEARCH_STATE | undefined>>,
+//     setMarkdownText: React.Dispatch<React.SetStateAction<string | undefined>>
+// ) {
+//     if (filters.searchString) {
+//         setSearchResultState(SEARCH_STATE.SUCCESS);
+//         setMarkdownText(filters.searchString);
+//     } else if (searchResultState) {
+//         setSearchResultState(undefined);
+//         setMarkdownText(undefined);
+//     }
+// }
+//
+// export function populateRandomCategory(
+//     randomCategory: RandomCategoryStateProps,
+//     randomCategoryRecipes: Recipe[] | undefined,
+//     subCategoriesByIds: SubCategoriesByIds,
+//     setRandomCategoryData: React.Dispatch<React.SetStateAction<RandomCategoryataStateProps | null>>
+// ) {
+//     if (!randomCategory || !randomCategoryRecipes?.length) return;
+//
+//     const {
+//         randomCategory: { categoryRu, categoryDescription },
+//     } = randomCategory;
+//
+//     const populatedData = randomCategoryRecipes.map((e) =>
+//         populateRecipeCategory(e, subCategoriesByIds),
+//     );
+//
+//     setRandomCategoryData({
+//         category: { title: categoryRu, description: categoryDescription },
+//         recipes: populatedData,
+//     });
+// }

@@ -23,6 +23,7 @@ const NotFoundPage = () => (
                 titleTextFz='24px'
                 titleTextLh='32px'
                 titleText={PAGE_TITLES.notFound}
+                titleTextAlign='center'
             />
             <Text>
                 Можете поискать другой рецепт{' '}

@@ -39,6 +39,7 @@ export const TEST_IDS = {
     homeLink: 'error-page-go-home',
     juciestLink: 'juiciest-link',
     juciestLinkMobile: 'juiciest-link-mobile',
+    carousel: 'carousel',
 } as const;
 
 export const predefinedAllergens: string[] = [

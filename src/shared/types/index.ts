@@ -7,17 +7,15 @@ import { Path } from 'react-router';
 
 import { SEARCH_STATE } from '~/shared/constants';
 
-// ============================================================================
-// 🗂️  Domain models (core data structures used across the app)
-// ============================================================================
+// Domain models (core data structures used across the app)
 export type AllCategories = {
-    apiQureryId?: string;
-    categoryDescription?: string;
     categoryEn: string;
-    categoryIcon?: string;
-    categoryId?: string;
     categoryRu: string;
     route: string;
+    apiQureryId?: string;
+    categoryDescription?: string;
+    categoryIcon?: string;
+    categoryId?: string;
     subCategories?: SubCategory[];
     subCategoriesList?: SubCategoryList[];
 };
@@ -98,9 +96,7 @@ export type SubCategoriesByIds = {
     [key: string]: SubCategory;
 };
 
-// ============================================================================
-// 🧭  Navigation & routing
-// ============================================================================
+// Navigation & routing
 export type BreadcrumbItem = {
     label: string;
     to: string;
@@ -130,9 +126,7 @@ export type NavigationReducerProps = {
     navigationConfig: NavigationConfig;
 };
 
-// ============================================================================
-// 🔍  Filters & search
-// ============================================================================
+// Filters & search
 export type AllergensFilterProps = {
     dataTestAllergenTag?: string;
     dataTestCheckBoKeykey?: string;
@@ -266,9 +260,7 @@ export interface RecipeButtonsSectionProps extends ButtonBookBtnProps, ButtonTim
     coockingButtonDataId?: string | number;
 }
 
-// ============================================================================
-// 🖼️  Component props — Cards & sections
-// ============================================================================
+// Component props — Cards & sections
 export type AuthorCardProps = {
     email: string;
     name: string;
@@ -285,14 +277,14 @@ export type BlogProps = {
 };
 
 export type CategoryMenuProps = {
-    activeSubcategory?: string;
     list: SubCategoryList[];
+    activeSubcategory?: string;
 };
 
 export type CategorySectionNextProps = {
     data: RecipeProps[];
-    description?: string;
     title: string;
+    description?: string;
 };
 
 export type CategorySectionProps = {
@@ -315,15 +307,15 @@ export type CategorySectionProps = {
 };
 
 export type CheckBoxLimeProps = {
-    dataTestCatagory?: string;
-    dataTestCheckBoKeykey?: string;
-    dataTestIds?: string | number;
     index: number;
     isChecked: boolean;
     item: string;
+    toggleItem: CallableFunction;
+    dataTestCatagory?: string;
+    dataTestCheckBoKeykey?: string;
+    dataTestIds?: string | number;
     labelColor?: string;
     px?: number;
-    toggleItem: CallableFunction;
 };
 
 export type CookingStepsProps = CoockingSteps & {
@@ -342,9 +334,9 @@ export type FooterProps = {
 };
 
 export type NextSectionCardMinimizedProps = {
+    title: string;
     buttonText?: string;
     iconUrl?: string;
-    title: string;
 };
 
 export type ServerErrorAlertProps = {

@@ -10,12 +10,17 @@ import {
 } from 'src/shared/types';
 
 import { useFilters } from '~/app/providers/Filters/useFilters';
-import { setCurrentLocation } from '~/redux';
 import { useRequests } from '~/redux/query/utils';
 import { setAppError, userErrorSelector } from '~/redux/store/app-slice';
 import { EXCLUDED_ROUTES, PAGE_TITLES, SEARCH_STATE } from '~/shared/constants';
 import { CategorySection, CategorySectionNext, PageWrapper, ServerErrorAlert } from '~/shared/ui';
-import { getRandomCategory, populateRecipeCategory } from '~/utils';
+import { getRandomCategory } from '~/utils';
+import {
+    populateAndSetRecipes,
+    populateRandomCategory,
+    syncSearchState,
+    updateLocation,
+} from '~/utils/categoryHelpers';
 import { Loader } from '~/widgets';
 import { SearchBar } from '~/widgets/SearchBar';
 
@@ -38,7 +43,7 @@ const CategoryPage = ({ navigationConfig }: Props) => {
         [currentCategory, subcategory],
     );
 
-    const isJuiciest: boolean = category === EXCLUDED_ROUTES.juiciest;
+    const isJuiciest = category === EXCLUDED_ROUTES.juiciest;
 
     const { categoryRu, categoryDescription, categoryId } = currentCategory || {};
     const { apiQureryId } = currentSubCategory || {};
@@ -73,76 +78,56 @@ const CategoryPage = ({ navigationConfig }: Props) => {
         isErrorRandom,
     } = useRequests({ randomCategory, isJuiciest, apiQureryId, page });
 
+    // Инициализация случайной категории
     useEffect(() => {
-        if (!isLoadingCategory && !isLoadingRandom && !isFetching) {
-            if (categoryData?.length) {
-                const populatedData = categoryData.map((e) =>
-                    populateRecipeCategory(e, subCategoriesByIds),
-                );
+        const randomCategory = getRandomCategory(categoriesByIds, categoryId);
+        const subcategoriesIds =
+            randomCategory?.subCategories?.map((e) => e.apiQureryId).join(',') || '';
 
-                setCategoryRecipes((prevData) =>
-                    page === 1 ? populatedData : [...prevData, ...populatedData],
-                );
+        setRandomCategory({ randomCategory, subcategoriesIds });
+    }, [categoryId, categoriesByIds]);
 
-                if (isJuiciest) {
-                    dispatch(
-                        setCurrentLocation({
-                            category: { label: PAGE_TITLES.juiciest },
-                        }),
-                    );
-                }
+    // Сброс страницы при изменении API ID запроса
+    useEffect(() => {
+        setPage(1);
+    }, [apiQureryId]);
 
-                if (currentCategory) {
-                    const currentSubcategory = currentCategory?.subCategories?.find(
-                        (e) => e.subcategoryEn === subcategory,
-                    );
-                    if (currentSubcategory) {
-                        dispatch(
-                            setCurrentLocation({
-                                category: {
-                                    label: currentCategory.categoryRu,
-                                    route: currentCategory.route,
-                                },
-                                subcategory: {
-                                    label: currentSubcategory?.subcategoryRu,
-                                    route: currentSubcategory.route,
-                                },
-                            }),
-                        );
-                    }
-                }
-
-                if (filters.searchString) {
-                    setSearchResultState(SEARCH_STATE.SUCCESS);
-                    setMarkdownText(filters.searchString);
-                } else if (searchResultState) {
-                    setSearchResultState(undefined);
-                    setMarkdownText(undefined);
-                }
-            } else {
-                if (filters.searchString) {
-                    setSearchResultState(SEARCH_STATE.EMPTY);
-                    setMarkdownText(undefined);
-                }
+    // Обработка ошибок
+    useEffect(() => {
+        if (isErrorCategory || isErrorRandom) {
+            if (filters.searchString) {
+                setSearchResultState(SEARCH_STATE.ERROR);
+                setMarkdownText(undefined);
             }
-
-            if (randomCategory) {
-                if (randomCategoryRecipes?.length) {
-                    const {
-                        randomCategory: { categoryRu, categoryDescription },
-                    } = randomCategory;
-
-                    const populatedData = randomCategoryRecipes.map((e) =>
-                        populateRecipeCategory(e, subCategoriesByIds),
-                    );
-
-                    setRandomCategoryData({
-                        category: { title: categoryRu, description: categoryDescription },
-                        recipes: populatedData,
-                    });
-                }
-            }
+            dispatch(setAppError(true));
         }
+    }, [isErrorCategory, isErrorRandom, filters.searchString, dispatch]);
+
+    // Главный эффект для обработки данных - с использованием отдельных функций
+    useEffect(() => {
+        if (isLoadingCategory || isLoadingRandom || isFetching) {
+            return;
+        }
+        populateAndSetRecipes(categoryData, page, subCategoriesByIds, setCategoryRecipes);
+
+        if (categoryData?.length) {
+            updateLocation(isJuiciest, currentCategory, subcategory, dispatch);
+        }
+
+        syncSearchState(
+            filters,
+            categoryData,
+            searchResultState,
+            setSearchResultState,
+            setMarkdownText,
+        );
+
+        populateRandomCategory(
+            randomCategory,
+            randomCategoryRecipes,
+            subCategoriesByIds,
+            setRandomCategoryData,
+        );
     }, [
         categoryData,
         currentCategory,
@@ -159,32 +144,7 @@ const CategoryPage = ({ navigationConfig }: Props) => {
         isFetching,
         subCategoriesByIds,
         dispatch,
-        resetError,
     ]);
-
-    useEffect(() => {
-        const randomCategory = getRandomCategory(categoriesByIds, categoryId);
-        const subcategoriesIds =
-            randomCategory?.subCategories?.map((e) => e.apiQureryId).join(',') || '';
-
-        setRandomCategory({ randomCategory, subcategoriesIds });
-    }, [categoryId, categoriesByIds]);
-
-    useEffect(() => {
-        setPage(1);
-    }, [apiQureryId]);
-
-    useEffect(() => {
-        if (isErrorCategory || isErrorRandom) {
-            if (filters.searchString) {
-                setSearchResultState(SEARCH_STATE.ERROR);
-                setMarkdownText(undefined);
-                dispatch(setAppError(true));
-            } else {
-                dispatch(setAppError(true));
-            }
-        }
-    }, [isErrorCategory, isErrorRandom, filters.searchString, dispatch]);
 
     if (!currentCategory && !isJuiciest) {
         return <Navigate to='/not-found' replace />;

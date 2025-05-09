@@ -25,7 +25,7 @@ export const Slider = ({ slides = [], markdownText }: Props) => {
     return (
         <Flex direction='column' position='relative' mr={{ base: -4, md: 0 }}>
             <Swiper
-                data-test-id='carousel'
+                data-test-id={TEST_IDS.carousel}
                 modules={[Navigation]}
                 navigation={{
                     nextEl: '.slider-right-button',

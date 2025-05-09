@@ -16,8 +16,7 @@ import { useFilters } from '~/app/providers/Filters/useFilters';
 import { SEARCH_STATE, TEST_IDS } from '~/shared/constants';
 import { BORDERS, SHADOWS } from '~/shared/constants/styles';
 import { AllergensFilter, SwitchToggler, TextRegular, TitleText } from '~/shared/ui';
-
-import { SearchLoader } from '../Loader';
+import { SearchLoader } from '~/widgets/Loader/SearchLoader';
 
 export const SearchBar = ({
     pageTitle,
@@ -84,6 +83,8 @@ export const SearchBar = ({
                 boxShadow: SHADOWS.searchBar,
                 borderRadius: '0 0 8px 8px',
             }}
+            boxShadow={isLoading ? SHADOWS.searchBar : undefined}
+            borderRadius={isLoading ? '0 0 8px 8px' : undefined}
             gap={{ base: 4, xl: 8 }}
         >
             <Box>
