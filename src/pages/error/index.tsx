@@ -4,7 +4,7 @@ import { Link } from 'react-router';
 import { PAGE_TITLES, TEST_IDS } from '~/shared/constants';
 import { PageWrapper, SubtitleText } from '~/shared/ui';
 
-const NotFoundPage = () => (
+export const NotFoundPage = () => (
     <PageWrapper>
         <VStack
             justifyContent='center'
@@ -38,5 +38,3 @@ const NotFoundPage = () => (
         </VStack>
     </PageWrapper>
 );
-
-export default NotFoundPage;

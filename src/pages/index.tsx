@@ -1,16 +1,25 @@
 import { lazy, Suspense } from 'react';
-import { Navigate, Route, Routes } from 'react-router';
+import { Route, Routes } from 'react-router';
 import { NavigationConfig } from 'src/shared/types';
 
-const CategoryComponent = lazy(() => import('./category'));
-const RecipeComponent = lazy(() => import('./recipe'));
-const HomeComponent = lazy(() => import('./home'));
+const CategoryComponent = lazy(() =>
+    import('./category').then((module) => ({ default: module.CategoryPage })),
+);
 
+const RecipeComponent = lazy(() =>
+    import('./recipe').then((module) => ({ default: module.RecipePage })),
+);
+
+const HomeComponent = lazy(() => import('./home').then((module) => ({ default: module.HomePage })));
+
+const ErrorComponent = lazy(() =>
+    import('./error').then((module) => ({ default: module.NotFoundPage })),
+);
 type Props = {
     navigationConfig: NavigationConfig;
 };
 
-const AppViews = ({ navigationConfig }: Props) => (
+export const AppViews = ({ navigationConfig }: Props) => (
     <Suspense>
         <Routes>
             <Route
@@ -22,10 +31,7 @@ const AppViews = ({ navigationConfig }: Props) => (
                 path='/:category/:subcategory?'
                 element={<CategoryComponent navigationConfig={navigationConfig} />}
             />
-            <Route path='/not-found' Component={lazy(() => import('./error'))} />
-            <Route path='*' element={<Navigate to='/not-found' replace />} />
+            <Route path='/not-found' element={<ErrorComponent />} />
         </Routes>
     </Suspense>
 );
-
-export default AppViews;

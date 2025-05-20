@@ -1,6 +1,6 @@
 import { Box } from '@chakra-ui/react';
 
-import AppViews from '~/pages';
+import { AppViews } from '~/pages';
 import { useAllCategoriesQuery } from '~/redux/query/create-api';
 import { getLocallySavedNavigationConfig } from '~/utils';
 import {
@@ -12,7 +12,7 @@ import {
     SideMenu,
 } from '~/widgets';
 
-const AppLayout = () => {
+export const AppLayout = () => {
     const savedNavigationConfig = getLocallySavedNavigationConfig();
     const { data: navigationConfig, isLoading } = useAllCategoriesQuery(undefined, {
         skip: !!savedNavigationConfig,
@@ -37,5 +37,3 @@ const AppLayout = () => {
         </Box>
     );
 };
-
-export default AppLayout;

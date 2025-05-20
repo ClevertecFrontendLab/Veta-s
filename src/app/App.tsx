@@ -2,14 +2,12 @@ import './App.css';
 
 import { BrowserRouter } from 'react-router';
 
-import AppLayout from '~/layouts/AppLayout';
+import { AppLayout } from '~/layouts/AppLayout';
 
-function App() {
+export function App() {
     return (
         <BrowserRouter>
             <AppLayout />
         </BrowserRouter>
     );
 }
-
-export default App;

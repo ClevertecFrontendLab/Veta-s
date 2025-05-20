@@ -32,7 +32,7 @@ type Props = {
     navigationConfig: NavigationConfig;
 };
 
-const HomePage = ({ navigationConfig }: Props) => {
+export const HomePage = ({ navigationConfig }: Props) => {
     const { subCategoriesByIds, categoriesByIds } = navigationConfig;
 
     const { filters } = useFilters();
@@ -185,5 +185,3 @@ const HomePage = ({ navigationConfig }: Props) => {
         </PageWrapper>
     );
 };
-
-export default HomePage;

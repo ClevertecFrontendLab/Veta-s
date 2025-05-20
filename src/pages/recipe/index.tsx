@@ -35,7 +35,7 @@ const authorData = {
     subscribers: 125,
 };
 
-const RecipePage = ({ navigationConfig }: Props) => {
+export const RecipePage = ({ navigationConfig }: Props) => {
     const { id, category, subcategory } = useParams<LocationParams>();
     const { subCategoriesByIds, navigationTree } = navigationConfig;
     const navigate = useNavigate();
@@ -167,5 +167,3 @@ const RecipePage = ({ navigationConfig }: Props) => {
         </PageWrapper>
     );
 };
-
-export default RecipePage;

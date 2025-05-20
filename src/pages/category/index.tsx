@@ -28,7 +28,7 @@ type Props = {
     navigationConfig: NavigationConfig;
 };
 
-const CategoryPage = ({ navigationConfig }: Props) => {
+export const CategoryPage = ({ navigationConfig }: Props) => {
     const { filters } = useFilters();
     const { category, subcategory } = useParams<{ category: string; subcategory: string }>();
     const { subCategoriesByIds, categoriesByIds, navigationTree } = navigationConfig;
@@ -138,7 +138,7 @@ const CategoryPage = ({ navigationConfig }: Props) => {
         isLoadingRandom,
         category,
         searchResultState,
-        filters.searchString,
+        filters,
         subcategory,
         page,
         isFetching,
@@ -189,5 +189,3 @@ const CategoryPage = ({ navigationConfig }: Props) => {
         </PageWrapper>
     );
 };
-
-export default CategoryPage;
