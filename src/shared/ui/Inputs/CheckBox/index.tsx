@@ -10,15 +10,15 @@ export const CheckBoxLime = ({
     toggleItem,
     dataTestIds = '',
     dataTestCheckBoKeykey = '',
-    dataTestCatagory = '',
+    dataTestCategory = '',
     px = 4,
     labelColor = 'blackAlpha.800',
 }: CheckBoxLimeProps) => (
     <Checkbox
         data-test-id={
-            dataTestCheckBoKeykey && !dataTestCatagory
+            dataTestCheckBoKeykey && !dataTestCategory
                 ? `${dataTestCheckBoKeykey}${dataTestIds}`
-                : dataTestCatagory
+                : dataTestCategory
         }
         px={px}
         h={8}

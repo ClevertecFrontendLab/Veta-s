@@ -28,8 +28,7 @@ import {
     SwitchToggler,
 } from '~/shared/ui';
 import { FilterTag } from '~/widgets/Filter/FilterTag';
-
-import { FilterTitle } from './FilterTitle';
+import { OptionCheckbox } from '~/widgets/Filter/OptionCheckbox';
 
 export const RecipeFilter = () => {
     const meats = useSelector(getMeats);
@@ -189,7 +188,7 @@ export const RecipeFilter = () => {
                                 >
                                     {categories.map((category, index) => (
                                         <CheckBoxLime
-                                            dataTestCatagory={`checkbox-${category.toLowerCase()}`}
+                                            dataTestCategory={`checkbox-${category.toLowerCase()}`}
                                             key={index}
                                             index={index}
                                             item={category}
@@ -225,38 +224,20 @@ export const RecipeFilter = () => {
                             )}
                         </VStack>
 
-                        {/* мясо */}
-                        <Box mt={4} w='100%'>
-                            <FilterTitle title='Тип мяса' />
-                            {meats.map((meat, index) => (
-                                <CheckBoxLime
-                                    labelColor='#000'
-                                    px={0}
-                                    key={index}
-                                    index={0}
-                                    item={meat}
-                                    isChecked={selectedMeats.includes(meat)}
-                                    toggleItem={toggleMeatSelection}
-                                />
-                            ))}
-                        </Box>
+                        <OptionCheckbox
+                            title='Тип мяса'
+                            options={meats}
+                            selectedOptions={selectedMeats}
+                            toggleOption={toggleMeatSelection}
+                        />
 
-                        {/* гарнир */}
-                        <Box mt={4} w='100%'>
-                            <FilterTitle title='Тип гарнира' />
-                            {sides.map((side, index) => (
-                                <CheckBoxLime
-                                    dataTestCatagory={`checkbox-${side.toLowerCase()}`}
-                                    labelColor='#000'
-                                    px={0}
-                                    key={index}
-                                    index={0}
-                                    item={side}
-                                    isChecked={selectedSides.includes(side)}
-                                    toggleItem={() => toggleSideSelection(side)}
-                                />
-                            ))}
-                        </Box>
+                        <OptionCheckbox
+                            dataTestPrefix='side'
+                            title='Тип гарнира'
+                            options={sides}
+                            selectedOptions={selectedSides}
+                            toggleOption={toggleSideSelection}
+                        />
 
                         {/* аллергены */}
                         <Box w='100%'>

@@ -4,10 +4,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router';
 import { LocationParams, NavigationConfig, RecipeProps } from 'src/shared/types';
 
-import { setCurrentLocation } from '~/redux';
+import { useNavigationLocation } from '~/pages/recipe/useNavigationLocation';
 import { useCategoryRecieptsQuery, useRecieptQuery } from '~/redux/query/create-api';
 import { setAppError, userErrorSelector } from '~/redux/store/app-slice';
-import { EXCLUDED_ROUTES, PAGE_TITLES } from '~/shared/constants';
 import { PADDINGS } from '~/shared/constants/styles';
 import {
     CategoryHeader,
@@ -36,22 +35,25 @@ const authorData = {
 };
 
 export const RecipePage = ({ navigationConfig }: Props) => {
-    const { id, category, subcategory } = useParams<LocationParams>();
-    const { subCategoriesByIds, navigationTree } = navigationConfig;
+    const { id } = useParams<LocationParams>();
+    const { subCategoriesByIds } = navigationConfig;
     const navigate = useNavigate();
 
     const [reciept, setReciept] = useState<RecipeProps>();
     const [latestReciepts, setLatestReciepts] = useState<RecipeProps[]>([]);
     const dispatch = useDispatch();
     const error = useSelector(userErrorSelector);
+
     const resetError = useCallback(() => {
         dispatch(setAppError(null));
     }, [dispatch]);
+
     const {
         data: recieptData,
         isLoading: isLoadingReciept,
         isError: isRecieptEror,
     } = useRecieptQuery(id || '', { skip: !id });
+
     const {
         data: { data: latestData } = {},
         isLoading: isLoadingLatest,
@@ -61,52 +63,20 @@ export const RecipePage = ({ navigationConfig }: Props) => {
         isLatest: true,
     });
 
+    // Используем наш новый хук для управления навигацией
+    useNavigationLocation(reciept, isLoadingReciept, navigationConfig);
+
     useEffect(() => {
-        if (subCategoriesByIds) {
-            if (recieptData && !isLoadingReciept) {
-                const populatedData = populateRecipeCategory(recieptData, subCategoriesByIds);
-                setReciept(populatedData);
+        if (subCategoriesByIds && recieptData && !isLoadingReciept) {
+            const populatedData = populateRecipeCategory(recieptData, subCategoriesByIds);
+            setReciept(populatedData);
+        }
 
-                const currentCategory = navigationTree.find((e) => e.categoryEn === category);
-
-                if (currentCategory) {
-                    const currentSubcategory = currentCategory?.subCategories?.find(
-                        (e) => e.subcategoryEn === subcategory,
-                    );
-                    if (currentSubcategory) {
-                        dispatch(
-                            setCurrentLocation({
-                                category: {
-                                    label: currentCategory.categoryRu,
-                                    route: currentCategory.route,
-                                },
-                                subcategory: {
-                                    label: currentSubcategory?.subcategoryRu,
-                                    route: currentSubcategory.route,
-                                },
-                                reciept: { label: populatedData.title },
-                            }),
-                        );
-                    }
-                } else if (category === EXCLUDED_ROUTES.juiciest) {
-                    dispatch(
-                        setCurrentLocation({
-                            category: {
-                                label: PAGE_TITLES.juiciest,
-                                route: `/${EXCLUDED_ROUTES.juiciest}`,
-                            },
-                            reciept: { label: populatedData.title },
-                        }),
-                    );
-                }
-            }
-
-            if (latestData && !isLoadingLatest) {
-                const populatedData = latestData.map((e) =>
-                    populateRecipeCategory(e, subCategoriesByIds),
-                );
-                setLatestReciepts(populatedData);
-            }
+        if (subCategoriesByIds && latestData && !isLoadingLatest) {
+            const populatedData = latestData.map((e) =>
+                populateRecipeCategory(e, subCategoriesByIds),
+            );
+            setLatestReciepts(populatedData);
         }
 
         if (isRecieptEror) {
@@ -118,9 +88,6 @@ export const RecipePage = ({ navigationConfig }: Props) => {
             dispatch(setAppError('Error'));
         }
     }, [
-        category,
-        subcategory,
-        navigationTree,
         recieptData,
         latestData,
         isLoadingReciept,
